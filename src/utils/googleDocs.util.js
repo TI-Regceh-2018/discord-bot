@@ -6,25 +6,15 @@ const sheetId = googleAPIConfig.GOOGLE_APIS_SPREADSHEET_ID;
 const tabName = googleAPIConfig.GOOGLE_APIS_SPREADSHEET_TAB_NAME;
 const range = "A:E";
 
-const writeToGoogleSheet = async (dataParam) => {
-  const dataToBeInserted = [
-    [
-      "=ROW()-1",
-      dataParam.posisi,
-      dataParam.perusahaan,
-      dataParam.link,
-      "FALSE",
-    ],
-  ];
+const writeToGoogleSheet = async (dataToBeInserted) => {
   const googleSheetClient = await _getGoogleSheetClient();
 
-  const data = await _readGoogleSheet(
-    googleSheetClient,
-    sheetId,
-    tabName,
-    range
-  );
-  console.log(data);
+  // const data = await _readGoogleSheet(
+  //   googleSheetClient,
+  //   sheetId,
+  //   tabName,
+  //   range
+  // );
 
   await _writeGoogleSheet(
     googleSheetClient,

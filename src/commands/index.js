@@ -1,5 +1,7 @@
-const addJobVacancyCommand = require("./addJobVacancy");
+const addJobVacancyCommand = require("./jobVacancy/add");
+const bulkInsertJobVacancyCommand = require("./jobVacancy/bulkAdd");
 
 module.exports = {
   addJobVacancyCommand,
+  bulkInsertJobVacancyCommand,
 };

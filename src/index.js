@@ -19,7 +19,6 @@ try {
 
   client.on("interactionCreate", (interaction) => {
     if (interaction.isChatInputCommand()) {
-      console.log("Chat Command");
       if (interaction.commandName === "add") {
         const modal = new ModalBuilder()
           .setTitle("Add Job Vacancy")
@@ -48,23 +47,54 @@ try {
             )
           );
         interaction.showModal(modal);
+      } else if (interaction.commandName === "bulk") {
+        const modal = new ModalBuilder()
+          .setTitle("Add Job Vacancy")
+          .setCustomId("bulkModal")
+          .setComponents(
+            new ActionRowBuilder().setComponents(
+              new TextInputBuilder()
+                .setLabel("link")
+                .setCustomId("link")
+                .setStyle(TextInputStyle.Paragraph)
+                .setPlaceholder(
+                  `Kalau mager isi link aja yang banyak, pisah pakai enter, batas 4000 char ya`
+                )
+            )
+          );
+        interaction.showModal(modal);
       }
     } else if (interaction.type === InteractionType.ModalSubmit) {
-      writeToGoogleSheet({
-        posisi: interaction.fields.getTextInputValue("posisi"),
-        perusahaan: interaction.fields.getTextInputValue("perusahaan"),
-        link: interaction.fields.getTextInputValue("link"),
-      });
-
-      console.log("Modal Submitted...");
       if (interaction.customId === "addModal") {
-        console.log(interaction.fields.getTextInputValue("posisi"));
+        writeToGoogleSheet([
+          [
+            "=ROW()-1",
+            interaction.fields.getTextInputValue("posisi"),
+            interaction.fields.getTextInputValue("perusahaan"),
+            interaction.fields.getTextInputValue("link"),
+            "FALSE",
+          ],
+        ]);
+
         interaction.reply({
           content: `${interaction.fields.getTextInputValue(
             "posisi"
           )}  ${interaction.fields.getTextInputValue("perusahaan")}
 ${interaction.fields.getTextInputValue("link")}
         `,
+        });
+      } else if (interaction.customId === "bulkModal") {
+        const links = interaction.fields.getTextInputValue("link").split("\n");
+
+        const mappedLinks = links.map((link) => {
+          return ["=ROW()-1", null, null, link, "FALSE"];
+        });
+
+        writeToGoogleSheet(mappedLinks);
+
+        interaction.reply({
+          content:
+            "Document Job Vacancy telah diupdate, silahkan cek : https://bit.ly/jobregceh",
         });
       }
     }
