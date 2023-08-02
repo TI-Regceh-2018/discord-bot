@@ -117,11 +117,16 @@ Document Job Vacancy telah diupdate, silahkan cek : https://bit.ly/jobregceh`,
 
   client.on("ready", () => {
     console.log(`${client.user.tag} has logged in!`);
+    client.user.setActivity({
+      name: "Cara Membuat CV",
+      type: ActivityType.Watching,
+      url: "https://www.youtube.com/watch?v=K33W-KyGpW0",
+    });
 
-    setInterval(() => {
-      let random = Math.floor(Math.random() * status.length);
-      client.user.setActivity(status[random]);
-    }, 10 * 60 * 1000);
+    // setInterval(() => {
+    // let random = Math.floor(Math.random() * status.length);
+    // client.user.setActivity(status[random]);
+    // }, 10 * 60 * 1000);
   });
 } catch (err) {
   console.log(err);
