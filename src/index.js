@@ -77,9 +77,8 @@ try {
         ]);
 
         interaction.reply({
-          content: `${interaction.fields.getTextInputValue(
-            "posisi"
-          )}  ${interaction.fields.getTextInputValue("perusahaan")}
+          content: `${interaction.fields.getTextInputValue("posisi")}
+${interaction.fields.getTextInputValue("perusahaan")}
 ${interaction.fields.getTextInputValue("link")}
         `,
         });
@@ -89,12 +88,12 @@ ${interaction.fields.getTextInputValue("link")}
         const mappedLinks = links.map((link) => {
           return ["=ROW()-1", null, null, link, "FALSE"];
         });
-
         writeToGoogleSheet(mappedLinks);
 
         interaction.reply({
-          content:
-            "Document Job Vacancy telah diupdate, silahkan cek : https://bit.ly/jobregceh",
+          content: `
+${links.join("\n")}
+Document Job Vacancy telah diupdate, silahkan cek : https://bit.ly/jobregceh`,
         });
       }
     }
