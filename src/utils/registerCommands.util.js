@@ -3,13 +3,18 @@ const { REST } = require("@discordjs/rest");
 const {
   addJobVacancyCommand,
   bulkInsertJobVacancyCommand,
+  listJobVacancyCommand,
 } = require("../commands");
 const discordBotConfig = require("../config/discordBot.config");
 const rest = new REST({ version: "10" }).setToken(
   discordBotConfig.DISCORD_BOT_TOKEN
 );
 
-const commands = [addJobVacancyCommand, bulkInsertJobVacancyCommand];
+const commands = [
+  addJobVacancyCommand,
+  bulkInsertJobVacancyCommand,
+  listJobVacancyCommand,
+];
 
 (async () => {
   try {
