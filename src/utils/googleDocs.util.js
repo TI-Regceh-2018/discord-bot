@@ -9,13 +9,6 @@ const range = "A:E";
 const writeToGoogleSheet = async (dataToBeInserted) => {
   const googleSheetClient = await _getGoogleSheetClient();
 
-  // const data = await _readGoogleSheet(
-  //   googleSheetClient,
-  //   sheetId,
-  //   tabName,
-  //   range
-  // );
-
   await _writeGoogleSheet(
     googleSheetClient,
     sheetId,
@@ -23,6 +16,42 @@ const writeToGoogleSheet = async (dataToBeInserted) => {
     range,
     dataToBeInserted
   );
+};
+
+const list = async (keyWordParam) => {
+  const googleSheetClient = await _getGoogleSheetClient();
+
+  const data = await _readGoogleSheet(
+    googleSheetClient,
+    sheetId,
+    tabName,
+    range
+  );
+
+  // const { data } = require("../../array");
+
+  const filteredData = data.filter((row) =>
+    row.some((item) => item.toLowerCase().includes(keyWordParam.toLowerCase()))
+  );
+
+  if (filteredData.length === 0) {
+    return `Tidak ada job vacancy dengan keyword ${keyWordParam}`;
+  }
+
+  const mappedData = filteredData
+    .map((row) => {
+      return `[${row[0]} | ${row[1]} - ${row[2]}](<${row[3]}>)`;
+    })
+    .join("\n");
+
+  const result = `List job vacancy dengan keyword: ${keyWordParam}
+
+${mappedData}
+
+Dokumen lengkap ada di https://bit.ly/jobregceh
+  `;
+
+  return result;
 };
 
 const _getGoogleSheetClient = async () => {
@@ -65,4 +94,4 @@ const _writeGoogleSheet = async (
   });
 };
 
-module.exports = { writeToGoogleSheet };
+module.exports = { writeToGoogleSheet, list };
