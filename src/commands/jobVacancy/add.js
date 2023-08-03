@@ -1,7 +1,10 @@
 const { SlashCommandBuilder } = require("discord.js");
 
-const addJobVacancyCommand = new SlashCommandBuilder()
-  .setName("add")
-  .setDescription("Add a New Job Vacancy");
-
-module.exports = addJobVacancyCommand.toJSON();
+module.exports = {
+  data: new SlashCommandBuilder()
+    .setName("add")
+    .setDescription("Add a New Job Vacancy"),
+  async execute(interaction) {
+    console.log("Add a New Job Vacancy");
+  },
+};

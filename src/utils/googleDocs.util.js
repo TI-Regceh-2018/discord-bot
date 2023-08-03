@@ -34,8 +34,8 @@ const list = async (keyWordParam) => {
     row.some((item) => item.toLowerCase().includes(keyWordParam.toLowerCase()))
   );
 
-  if (!filteredData.length) {
-    return `Tidak ada data dengan keyword ${keyWordParam}`;
+  if (filteredData.length === 0) {
+    return `Tidak ada job vacancy dengan keyword ${keyWordParam}`;
   }
 
   const mappedData = filteredData
@@ -44,7 +44,7 @@ const list = async (keyWordParam) => {
     })
     .join("\n");
 
-  const result = `List Job Vacancy dengan Keyword ${keyWordParam}
+  const result = `List job vacancy dengan keyword: ${keyWordParam}
 
 ${mappedData}
 
