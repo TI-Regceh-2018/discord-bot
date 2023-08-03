@@ -10,7 +10,7 @@ const {
   ActivityType,
 } = require("discord.js");
 const discordBotConfig = require("./config/discordBot.config");
-const { writeToGoogleSheet } = require("./utils/googleDocs.util");
+const { writeToGoogleSheet, list } = require("./utils/googleDocs.util");
 
 try {
   const client = new Client({
@@ -31,7 +31,7 @@ try {
     },
   ];
 
-  client.on("interactionCreate", (interaction) => {
+  client.on("interactionCreate", async (interaction) => {
     if (interaction.isChatInputCommand()) {
       if (interaction.commandName === "add") {
         const modal = new ModalBuilder()
@@ -77,6 +77,21 @@ try {
             )
           );
         interaction.showModal(modal);
+      } else if (interaction.commandName === "list") {
+        if (interaction.options.getString("filter")) {
+          const filter = interaction.options.getString("filter");
+
+          const message = await list(filter);
+
+          return interaction.reply({
+            content: message,
+          });
+        }
+
+        return interaction.reply({
+          content:
+            "Kepanjangan ya, coba filter dulu atau cek Dokumen lengkap ada di https://bit.ly/jobregceh",
+        });
       }
     } else if (interaction.type === InteractionType.ModalSubmit) {
       if (interaction.customId === "addModal") {
