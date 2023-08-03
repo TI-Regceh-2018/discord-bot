@@ -1,4 +1,6 @@
 require("dotenv").config();
+const fs = require("node:fs");
+const path = require("node:path");
 const {
   ActionRowBuilder,
   Client,
@@ -7,7 +9,6 @@ const {
   ModalBuilder,
   TextInputBuilder,
   TextInputStyle,
-  ActivityType,
 } = require("discord.js");
 const discordBotConfig = require("./config/discordBot.config");
 const { writeToGoogleSheet, list } = require("./utils/googleDocs.util");
@@ -16,20 +17,6 @@ try {
   const client = new Client({
     intents: [GatewayIntentBits.Guilds],
   });
-
-  const status = [
-    {
-      name: "LIVE Interview with CEO LinkedIn",
-      type: ActivityType.Streaming,
-      url: "https://www.youtube.com/watch?v=K33W-KyGpW0",
-    },
-
-    {
-      name: "Cara Membuat CV",
-      type: ActivityType.Watching,
-      url: "https://www.youtube.com/watch?v=K33W-KyGpW0",
-    },
-  ];
 
   client.on("interactionCreate", async (interaction) => {
     if (interaction.isChatInputCommand()) {
@@ -128,21 +115,22 @@ Document Job Vacancy telah diupdate, silahkan cek : https://bit.ly/jobregceh`,
     }
   });
 
+  const eventsPath = path.join(__dirname, "events");
+  const eventFiles = fs
+    .readdirSync(eventsPath)
+    .filter((file) => file.endsWith(".js"));
+
+  for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if (event.once) {
+      client.once(event.name, (...args) => event.execute(...args));
+    } else {
+      client.on(event.name, (...args) => event.execute(...args));
+    }
+  }
+
   client.login(discordBotConfig.DISCORD_BOT_TOKEN);
-
-  client.on("ready", () => {
-    console.log(`${client.user.tag} has logged in!`);
-    client.user.setActivity({
-      name: "Cara Membuat CV",
-      type: ActivityType.Watching,
-      url: "https://www.youtube.com/watch?v=K33W-KyGpW0",
-    });
-
-    // setInterval(() => {
-    // let random = Math.floor(Math.random() * status.length);
-    // client.user.setActivity(status[random]);
-    // }, 10 * 60 * 1000);
-  });
 } catch (err) {
   console.log(err);
 }
