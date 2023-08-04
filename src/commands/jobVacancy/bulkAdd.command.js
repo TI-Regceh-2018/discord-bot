@@ -5,6 +5,6 @@ module.exports = {
     .setName("bulk")
     .setDescription("Bulk Insert New Job Vacancy"),
   async execute(interaction) {
-    console.log("Bulk Insert New Job Vacancy");
+    console.log("Bulk insert new job vacancy");
   },
 };
