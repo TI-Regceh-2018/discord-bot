@@ -4,7 +4,7 @@ const googleAPIConfig = require("../config/googleAPI.config");
 const serviceAccountKeyFile = googleAPIConfig.GOOGLE_APIS_KEYFILE;
 const sheetId = googleAPIConfig.GOOGLE_APIS_SPREADSHEET_ID;
 const tabName = googleAPIConfig.GOOGLE_APIS_SPREADSHEET_TAB_NAME;
-const range = "A:E";
+const range = "A2:E";
 
 const writeToGoogleSheet = async (dataToBeInserted) => {
   const googleSheetClient = await _getGoogleSheetClient();
@@ -30,28 +30,23 @@ const list = async (keyWordParam) => {
 
   // const { data } = require("../../array");
 
-  const filteredData = data.filter((row) =>
-    row.some((item) => item.toLowerCase().includes(keyWordParam.toLowerCase()))
-  );
+  let filteredData;
 
-  if (filteredData.length === 0) {
-    return `Tidak ada job vacancy dengan keyword ${keyWordParam}`;
+  if (keyWordParam) {
+    filteredData = data.filter((row) =>
+      row.some((item) =>
+        item.toLowerCase().includes(keyWordParam.toLowerCase())
+      )
+    );
+  } else {
+    filteredData = data;
   }
 
-  const mappedData = filteredData
-    .map((row) => {
-      return `[${row[0]} | ${row[1]} - ${row[2]}](<${row[3]}>)`;
-    })
-    .join("\n");
+  const mappedData = filteredData.map((row) => {
+    return `[${row[0]} | ${row[1]} - ${row[2]}](<${row[3]}>)`;
+  });
 
-  const result = `List job vacancy dengan keyword: ${keyWordParam}
-
-${mappedData}
-
-Dokumen lengkap ada di https://bit.ly/jobregceh
-  `;
-
-  return result;
+  return mappedData;
 };
 
 const _getGoogleSheetClient = async () => {
