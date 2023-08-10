@@ -33,10 +33,11 @@ const list = async (keyWordParam) => {
   let filteredData;
 
   if (keyWordParam) {
-    filteredData = data.filter((row) =>
-      row.some((item) =>
-        item.toLowerCase().includes(keyWordParam.toLowerCase())
-      )
+    filteredData = data.filter(
+      (row) =>
+        row.some((item) =>
+          item.toLowerCase().includes(keyWordParam.toLowerCase())
+        ) && row[4] !== "TRUE"
     );
   } else {
     filteredData = data;

@@ -15,7 +15,7 @@ module.exports = {
 
     if (!listJob) {
       return interaction.reply({
-        content: `Tidak ada job vacancy dengan keyword ${filter}`,
+        content: `Saat ini sedang tidak ada job vacancy yang terbuka dengan keyword ${filter}`,
       });
     }
 
