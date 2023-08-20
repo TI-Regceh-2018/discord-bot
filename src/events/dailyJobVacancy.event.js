@@ -11,7 +11,7 @@ module.exports = async (channel) => {
     "Hey friend, it's job o'clock! Check this out:",
   ];
 
-  cron.schedule("0 0 20 * * *", () => {
+  cron.schedule("0 0 13 * * *", () => {
     const text = `${
       greetingMessage[Math.floor(Math.random() * greetingMessage.length)]
     }
