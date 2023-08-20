@@ -10,7 +10,13 @@ Discord Bot that helped us to get an update about job information. This bot usin
 | `/bulk`           | Add multiple job information          |
 | `/list`           | List all job information              |
 | `/list <keyword>` | List all job information with keyword |
-| `/prune`          | Prune message(s)                      |
+| `/prune <amount>` | Prune message(s)                      |
+
+# Event
+
+| Event           |
+| :-------------- |
+| Daily job offer |
 
 ## Run Locally
 
