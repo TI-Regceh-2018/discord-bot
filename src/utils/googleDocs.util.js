@@ -40,7 +40,7 @@ const list = async (keyWordParam) => {
         ) && row[4] !== "TRUE"
     );
   } else {
-    filteredData = data;
+    filteredData = data.filter((row) => row[4] !== "TRUE");
   }
 
   const mappedData = filteredData.map((row) => {
