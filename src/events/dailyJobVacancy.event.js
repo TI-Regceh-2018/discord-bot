@@ -1,5 +1,6 @@
 const cron = require("node-cron");
 const { list } = require("../utils/googleDocs.util");
+const discordBotConfig = require("../config/discordBot.config");
 
 module.exports = async (channel) => {
   const jobVacancy = await list();
@@ -11,19 +12,22 @@ module.exports = async (channel) => {
     "Hey friend, it's job o'clock! Check this out:",
   ];
 
-  cron.schedule("0 0 13 * * *", () => {
-    const text = `${
-      greetingMessage[Math.floor(Math.random() * greetingMessage.length)]
-    }
+  // GMT + 0 on render
+  if (Boolean(discordBotConfig.EVENT_DAILY_JOB) === true) {
+    cron.schedule(discordBotConfig.EVENT_DAILY_JOB_CRON_SCHEDULE, () => {
+      const text = `${
+        greetingMessage[Math.floor(Math.random() * greetingMessage.length)]
+      }
 
 ${jobVacancy[Math.floor(Math.random() * jobVacancy.length)]
   .replace("<", "")
   .replace(">", "")}
     `;
-    channel.send(text).then((message) => {
-      setTimeout(() => {
-        message.delete();
-      }, 1000 * 60 * 60 * 24);
+      channel.send(text).then((message) => {
+        setTimeout(() => {
+          message.delete();
+        }, 1000 * 60 * 60 * 24);
+      });
     });
-  });
+  }
 };
