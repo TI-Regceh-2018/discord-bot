@@ -10,7 +10,14 @@ Discord Bot that helped us to get an update about job information. This bot usin
 | `/bulk`           | Add multiple job information          |
 | `/list`           | List all job information              |
 | `/list <keyword>` | List all job information with keyword |
-| `/prune`          | Prune message(s)                      |
+| `/prune <amount>` | Prune message(s)                      |
+| `/help`           | Show list of commands and description |
+
+# Event
+
+| Event           |
+| :-------------- |
+| Daily job offer |
 
 ## Run Locally
 
@@ -53,6 +60,9 @@ To run this project, you will need to add the following environment variables to
 `GOOGLE_APIS_KEYFILE`
 `GOOGLE_APIS_SPREADSHEET_ID`
 `GOOGLE_APIS_SPREADSHEET_TAB_NAME`
+
+`EVENT_DAILY_JOB`
+`EVENT_DAILY_JOB_CRON_SCHEDULE`
 
 ## Tech Stack
 
