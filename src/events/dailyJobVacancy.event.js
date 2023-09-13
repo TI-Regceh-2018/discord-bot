@@ -13,7 +13,7 @@ module.exports = async (channel) => {
   ];
 
   // GMT + 0 on render
-  if (Boolean(discordBotConfig.EVENT_DAILY_JOB) === true) {
+  if (discordBotConfig.EVENT_DAILY_JOB_ENABLED == "true") {
     cron.schedule(discordBotConfig.EVENT_DAILY_JOB_CRON_SCHEDULE, () => {
       const text = `${
         greetingMessage[Math.floor(Math.random() * greetingMessage.length)]
