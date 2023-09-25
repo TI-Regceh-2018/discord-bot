@@ -1,16 +1,19 @@
-const express = require("express");
-const path = require("path");
-const logger = require("morgan");
-const indexRouter = require("./routes/index");
-require("./bot.js");
+const Logger = require("./libs/logger.lib");
+const bannerLogger = require("./libs/banner.lib");
+const winstonLoader = require("./loaders/winston.loader");
+const monitorLoader = require("./loaders/monitor.loader");
+const expressLoader = require("./loaders/express.loader");
+const botLoader = require("./loaders/bot.loader");
+const log = new Logger(__filename);
 
-const app = express();
+async function initApp() {
+    winstonLoader();
+    botLoader();
 
-app.use(logger("common"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "../public")));
+    const app = expressLoader();
+    monitorLoader(app);
+}
 
-app.use("/", indexRouter);
-
-module.exports = app;
+initApp()
+    .then(() => bannerLogger(log))
+    .catch((error) => log.error("Application is crashed: " + error));
