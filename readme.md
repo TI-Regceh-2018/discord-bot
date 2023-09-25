@@ -52,6 +52,13 @@ for more information you can check [here](https://discordjs.guide/preparations/s
 
 To run this project, you will need to add the following environment variables to your .env file
 
+`APP_NAME`
+`APP_SCHEMA`
+`APP_HOST`
+`APP_PORT`
+`APP_ROUTE_PREFIX`
+`APP_BANNER`
+
 `DISCORD_BOT_TOKEN`
 `DISCORD_BOT_CLIENT_ID`
 `DISCORD_BOT_GUILD_ID`
@@ -63,6 +70,19 @@ To run this project, you will need to add the following environment variables to
 
 `EVENT_DAILY_JOB`
 `EVENT_DAILY_JOB_CRON_SCHEDULE`
+
+`LOG_LEVEL`
+`LOG_OUTPUT`
+
+`MONITOR_ENABLED`
+`MONITOR_ROUTE`
+`MONITOR_USERNAME`
+`MONITOR_PASSWORD`
+
+`SWAGGER_ENABLED`
+`SWAGGER_ROUTE`
+`SWAGGER_USERNAME`
+`SWAGGER_PASSWORD`
 
 ## Tech Stack
 
